@@ -1,17 +1,21 @@
-name: Deploy WorthWyl Forge demo
+name: Verify WorthWyl Forge web artifact
+
 on:
   push:
     branches: [main]
-  workflow_dispatch:
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
 permissions:
   contents: read
-  pages: write
-  id-token: write
+
 concurrency:
-  group: pages
+  group: forge-web-artifact-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
-  build:
+  build-artifact:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,17 +23,12 @@ jobs:
         with:
           node-version: 24
           cache: npm
+          cache-dependency-path: package-lock.json
       - run: npm ci
+      - run: npm run lint
       - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
+          name: worthwyl-forge-web-dist
           path: dist
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          if-no-files-found: error
