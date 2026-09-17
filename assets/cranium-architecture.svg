@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">Cranium Ecosystem architecture</title>
+  <desc id="desc">WorthWyl ownership and the Cranium layers: Core, Synapse, Kernel, Ultra, and public demonstration.</desc>
+  <rect width="1400" height="760" fill="#0b1020"/>
+  <text x="70" y="78" fill="#ffffff" font-family="Arial, sans-serif" font-size="42" font-weight="700">Cranium Ecosystem</text>
+  <text x="70" y="120" fill="#aab6d3" font-family="Arial, sans-serif" font-size="22">Presented through Convertible Cranium Engineering · WorthWyl Media</text>
+  <rect x="70" y="170" width="1260" height="120" rx="20" fill="#1a2745" stroke="#6d8fe8" stroke-width="2"/>
+  <text x="105" y="220" fill="#9ec5ff" font-family="Arial, sans-serif" font-size="20" font-weight="700">WORTHWYL LLC</text>
+  <text x="105" y="258" fill="#ffffff" font-family="Arial, sans-serif" font-size="26">Commercial licensing · technical assets · acquisition diligence</text>
+  <line x1="700" y1="290" x2="700" y2="340" stroke="#6d8fe8" stroke-width="3"/>
+  <polygon points="690,340 710,340 700,355" fill="#6d8fe8"/>
+  <g font-family="Arial, sans-serif">
+    <rect x="70" y="360" width="230" height="170" rx="18" fill="#172b35" stroke="#55d6be" stroke-width="2"/>
+    <text x="105" y="410" fill="#55d6be" font-size="22" font-weight="700">CORE</text>
+    <text x="105" y="450" fill="#ffffff" font-size="19">Authority transitions</text><text x="105" y="480" fill="#ffffff" font-size="19">Evidence requirements</text>
+    <rect x="330" y="360" width="230" height="170" rx="18" fill="#172b35" stroke="#55d6be" stroke-width="2"/>
+    <text x="365" y="410" fill="#55d6be" font-size="22" font-weight="700">SYNAPSE</text>
+    <text x="365" y="450" fill="#ffffff" font-size="19">Attestation</text><text x="365" y="480" fill="#ffffff" font-size="19">Risk boundaries</text>
+    <rect x="590" y="360" width="230" height="170" rx="18" fill="#172b35" stroke="#55d6be" stroke-width="2"/>
+    <text x="625" y="410" fill="#55d6be" font-size="22" font-weight="700">KERNEL</text>
+    <text x="625" y="450" fill="#ffffff" font-size="19">Receipts and replay</text><text x="625" y="480" fill="#ffffff" font-size="19">Recovery and memory</text>
+    <rect x="850" y="360" width="230" height="170" rx="18" fill="#172b35" stroke="#55d6be" stroke-width="2"/>
+    <text x="885" y="410" fill="#55d6be" font-size="22" font-weight="700">ULTRA</text>
+    <text x="885" y="450" fill="#ffffff" font-size="19">Integrated operator</text><text x="885" y="480" fill="#ffffff" font-size="19">Verification platform</text>
+    <rect x="1110" y="360" width="220" height="170" rx="18" fill="#33253b" stroke="#d995ff" stroke-width="2"/>
+    <text x="1145" y="410" fill="#d995ff" font-size="22" font-weight="700">PUBLIC</text>
+    <text x="1145" y="450" fill="#ffffff" font-size="19">Forge and demos</text><text x="1145" y="480" fill="#ffffff" font-size="19">Non-canonical surface</text>
+  </g>
+  <text x="70" y="625" fill="#aab6d3" font-family="Arial, sans-serif" font-size="21">Public review: bounded transition → stale-input rejection → machine-readable receipt</text>
+  <text x="70" y="675" fill="#7888aa" font-family="Arial, sans-serif" font-size="18">Internal verification is engineering evidence, not independent security certification.</text>
+</svg>

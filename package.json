@@ -9,10 +9,12 @@
     "start": "node dist/server.cjs",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "android:test": "cd android && ./gradlew test --no-daemon",
+    "android:assemble": "cd android && ./gradlew assembleDebug --no-daemon"
   },
   "dependencies": {
-    "@google/genai": "^1.29.0",
+    "@google/genai": "^2.22.0",
     "@tailwindcss/vite": "^4.1.14",
     "@vitejs/plugin-react": "^5.0.4",
     "clsx": "^2.1.1",
@@ -36,5 +38,8 @@
     "tsx": "^4.23.13",
     "typescript": "~5.8.2",
     "vite": "^8.3.0"
+  },
+  "engines": {
+    "node": ">=24.0.0 <25.0.0"
   }
 }

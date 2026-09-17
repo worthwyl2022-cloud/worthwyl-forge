@@ -43,3 +43,11 @@ Every security or performance statement should identify its source commit, comma
 ## Ownership and licensing
 
 See the repository license and security policy for applicable terms. This README describes the public demonstration surface and intentionally separates it from the private implementation portfolio.
+
+## WorthWyl ownership and review entry point
+
+The Cranium Ecosystem is presented through **Convertible Cranium Engineering**, the software and engineering division of **WorthWyl Media**. Commercial licensing and related technical assets are intended to be handled through **WorthWyl LLC**. **WorthWyl Foundation** is a separate nonprofit branch. See [`RIGHTS-AND-LICENSING.md`](./RIGHTS-AND-LICENSING.md) for the ownership boundary.
+
+Visual overview: [`assets/cranium-architecture.svg`](./assets/cranium-architecture.svg).
+
+Public review package: [`cranium-portfolio/public-review`](https://github.com/worthwyl2022-cloud/cranium-portfolio/tree/main/public-review).
