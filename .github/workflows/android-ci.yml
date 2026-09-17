@@ -27,8 +27,11 @@ jobs:
         with:
           packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
       - name: Run shared-core tests
-        run: ./android/gradlew :shared-core:test --no-daemon --stacktrace
+        working-directory: android
+        run: ./gradlew :shared-core:test --no-daemon --stacktrace
       - name: Run Android unit tests
-        run: ./android/gradlew :app:test --no-daemon --stacktrace
+        working-directory: android
+        run: ./gradlew :app:test --no-daemon --stacktrace
       - name: Assemble debug APK
-        run: ./android/gradlew :app:assembleDebug --no-daemon --stacktrace
+        working-directory: android
+        run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
