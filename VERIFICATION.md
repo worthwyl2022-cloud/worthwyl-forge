@@ -16,10 +16,13 @@ This record covers the Forge web surface, the new Android product boundary, and 
 | Boot-drive structure | `./HEALTH_CHECK.sh` | **PASS** | All required control files and seven product directories were present |
 | Canonical TypeScript kernel | `npm run lint`, `npm run build` | **PASS** | Typecheck/build completed with exit code 0 |
 | Canonical authority conformance | `npm run verify:conformance` | **PASS** | 8 of 8 vectors passed; 0 failed |
+| Forge authority adapter | POST `/api/substrate/evaluate-state-transition` | **PASS** | Allowed transition, fail-closed violation response, and deterministic replay receipt verified locally |
 
 ## Interpretation
 
 The web Forge remains build-verified in this environment. The Android source boundary exists and includes a native launcher activity, a platform-neutral Kotlin core, a unit test, and a dedicated CI workflow. **Android is not build-verified yet.** The correct status is `NOT PASS` until the hosted Android workflow completes successfully on a clean runner.
+
+The Forge web authority adapter now reports the canonical protocol version, hashes its request material with SHA-256, rejects simulated lane bypasses, dangling causal traces, empty payloads, invalid tiers, and escalation spikes, and returns the original receipt for an identical replay. This is an adapter-level verification; it does not replace the canonical Kernel's persisted authority engine.
 
 The Android shell deliberately reports `NOT_CONFIGURED` and `NOT_ESTABLISHED` for remote inference, external actions, durable synchronization, and the complete Forge workspace. Those statuses are product behavior, not missing marketing language.
 

@@ -22,6 +22,63 @@ async function startServer() {
     }
   });
 
+  // Forge adapter boundary: the web surface may propose a transition, but it
+  // cannot bypass deterministic validation. The canonical Kernel remains the
+  // authority source; this endpoint is a bounded local adapter for the UI.
+  const transitionReceipts = new Map<string, { nonce: number; payloadDigest: string; passed: boolean; violations: string[] }>();
+  let transitionNonce = 0;
+
+  app.post("/api/substrate/evaluate-state-transition", (req, res) => {
+    const {
+      sourceTier,
+      targetTier,
+      hasIsolatedSubject,
+      bypassLane,
+      payloadText,
+    } = req.body ?? {};
+    const source = Number(sourceTier);
+    const target = Number(targetTier);
+    const payload = typeof payloadText === "string" ? payloadText.trim() : "";
+    const violations: string[] = [];
+
+    if (!Number.isInteger(source) || !Number.isInteger(target) || source < 0 || source > 4 || target < 0 || target > 4) {
+      violations.push("INVALID_AUTHORITY_TIER");
+    }
+    if (!payload) violations.push("EMPTY_MUTATION_PAYLOAD");
+    if (hasIsolatedSubject) violations.push("DANGLING_CAUSAL_TRACE");
+    if (bypassLane) violations.push("AUTHORITY_LANE_BYPASS");
+    if (Number.isInteger(source) && Number.isInteger(target) && target > source + 1) {
+      violations.push("ESCALATION_SPIKE");
+    }
+
+    const requestMaterial = JSON.stringify({
+      protocol: "cranium-authority-protocol-v1.0.0",
+      source,
+      target,
+      hasIsolatedSubject: Boolean(hasIsolatedSubject),
+      bypassLane: Boolean(bypassLane),
+      payload,
+    });
+    const payloadDigest = crypto.createHash("sha256").update(requestMaterial).digest("hex");
+    const prior = transitionReceipts.get(payloadDigest);
+    const receipt = prior ?? {
+      nonce: ++transitionNonce,
+      payloadDigest,
+      passed: violations.length === 0,
+      violations,
+    };
+    transitionReceipts.set(payloadDigest, receipt);
+
+    res.json({
+      protocolVersion: "cranium-authority-protocol-v1.0.0",
+      nonce: receipt.nonce,
+      payloadDigest: receipt.payloadDigest,
+      passed: receipt.passed,
+      violations: receipt.violations,
+      replay: Boolean(prior),
+    });
+  });
+
   // Health check
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
