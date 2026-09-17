@@ -1,0 +1,30 @@
+name: WorthWyl Forge Android CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+      - name: Install Android SDK packages
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Run shared-core tests
+        run: ./android/gradlew :shared-core:test --no-daemon --stacktrace
+      - name: Run Android unit tests
+        run: ./android/gradlew :app:test --no-daemon --stacktrace
+      - name: Assemble debug APK
+        run: ./android/gradlew :app:assembleDebug --no-daemon --stacktrace

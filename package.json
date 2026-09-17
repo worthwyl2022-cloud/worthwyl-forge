@@ -9,7 +9,9 @@
     "start": "node dist/server.cjs",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "android:test": "cd android && ./gradlew test --no-daemon",
+    "android:assemble": "cd android && ./gradlew assembleDebug --no-daemon"
   },
   "dependencies": {
     "@google/genai": "^2.22.0",
