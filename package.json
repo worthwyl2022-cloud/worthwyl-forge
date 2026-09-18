@@ -34,7 +34,7 @@
     "esbuild": "^0.28.2",
     "nanoid": "^6.0.1",
     "postcss": "^8.5.28",
-    "tailwindcss": "^4.1.14",
+    "tailwindcss": "^4.3.3",
     "tsx": "^4.23.13",
     "typescript": "~5.8.2",
     "vite": "^8.3.0"
