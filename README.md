@@ -1,6 +1,6 @@
 # WorthWyl Forge
 
-WorthWyl Forge is the public demonstration and operator surface for the WorthWyl/Cranium portfolio. It presents governed AI infrastructure, cognitive-substrate research, deterministic evidence harnesses, and media-oriented work through a runnable React/Vite application rather than a static concept page.
+WorthWyl Forge is the public demonstration and operator surface for the WorthWyl / **Convertible Cranium** portfolio. It presents governed AI infrastructure, cognitive-substrate research, deterministic evidence harnesses, and media-oriented work through a runnable React/Vite application rather than a static concept page.
 
 ## Demonstration boundaries
 
@@ -31,10 +31,10 @@ Live model features require an explicitly configured provider key. Keep credenti
 
 | Layer | Role | Diligence status |
 |---|---|---|
-| Core | Governed authority and transaction decisions | Private implementation; controlled buyer access |
-| Synapse | Attestation and risk-boundary contracts | Private implementation; controlled buyer access |
-| Kernel | Receipts, replay controls, recovery, and governed memory | Private implementation; reproducible evidence package |
-| Forge | Public demonstration and operator surface | Public presentation layer |
+| Convertible Cranium Core | Governed authority and transaction decisions | Private implementation; controlled buyer access |
+| Convertible Cranium Synapse | Attestation and risk-boundary contracts | Private implementation; controlled buyer access |
+| Convertible Cranium Kernel | Receipts, replay controls, recovery, and governed memory | Private implementation; reproducible evidence package |
+| WorthWyl Forge | Public demonstration and operator surface | Public presentation layer |
 
 ## Evidence standard
 
@@ -46,7 +46,7 @@ See the repository license and security policy for applicable terms. This README
 
 ## WorthWyl ownership and review entry point
 
-The Cranium Ecosystem is presented through **Convertible Cranium Engineering**, the software and engineering division of **WorthWyl Media**. Commercial licensing and related technical assets are intended to be handled through **WorthWyl LLC**. **WorthWyl Foundation** is a separate nonprofit branch. See [`RIGHTS-AND-LICENSING.md`](./RIGHTS-AND-LICENSING.md) for the ownership boundary.
+The Convertible Cranium Ecosystem is presented through **Convertible Cranium Engineering**, the software and engineering division of **WorthWyl Media**. Commercial licensing and related technical assets are intended to be handled through **WorthWyl LLC**. **WorthWyl Foundation** is a separate nonprofit branch. See [`RIGHTS-AND-LICENSING.md`](./RIGHTS-AND-LICENSING.md) for the ownership boundary.
 
 Visual overview: [`assets/cranium-architecture.svg`](./assets/cranium-architecture.svg).
 
