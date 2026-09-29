@@ -13,6 +13,24 @@ async function startServer() {
   app.use(express.urlencoded({ extended: true, limit: "50mb" }));
   const PORT = 3000;
 
+  // Bounded per-client request rate limiter. This is intentionally dependency-free
+  // so the offline/acquisition surfaces retain deterministic startup behavior.
+  const rateBuckets = new Map<string, { count: number; resetAt: number }>();
+  const requestRateLimit = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const now = Date.now();
+    const key = req.ip || req.socket.remoteAddress || "unknown";
+    const current = rateBuckets.get(key);
+    const bucket = !current || current.resetAt <= now ? { count: 0, resetAt: now + 60_000 } : current;
+    bucket.count += 1;
+    rateBuckets.set(key, bucket);
+    if (bucket.count > 120) {
+      res.setHeader("Retry-After", Math.ceil((bucket.resetAt - now) / 1000));
+      return res.status(429).json({ error: "rate limit exceeded" });
+    }
+    next();
+  };
+  app.use(requestRateLimit);
+
   const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY || "",
     httpOptions: {
