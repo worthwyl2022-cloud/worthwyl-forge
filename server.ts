@@ -7,6 +7,11 @@ import { GoogleGenAI, Type } from "@google/genai";
 
 const __dirname = process.cwd();
 
+const geminiApiKey = process.env.GEMINI_API_KEY?.trim();
+if (!geminiApiKey) {
+  throw new Error("GEMINI_API_KEY is required. WorthWyl Studio fails closed when its configured AI provider is unavailable; no synthetic, simulated, stock, or heuristic AI substitute is permitted.");
+}
+
 async function startServer() {
   const app = express();
   app.use(express.json({ limit: "50mb" }));
@@ -32,7 +37,7 @@ async function startServer() {
   app.use(requestRateLimit);
 
   const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY || "",
+    apiKey: geminiApiKey,
     httpOptions: {
       headers: {
         'User-Agent': 'aistudio-build',
@@ -156,27 +161,6 @@ async function startServer() {
     const contentToProcess = message || prompt || "Signal query";
 
     try {
-      if (!process.env.GEMINI_API_KEY) {
-        // High quality fallback parser & generator
-        if (contentToProcess.includes("Analyze the following novel episode") || contentToProcess.includes("Return ONLY a valid JSON")) {
-          return res.json({
-            response: JSON.stringify({
-              characters: ["Evelyn Cross", "Marcus Vance", "The Archivist"],
-              locations: ["The Lower District", "The Resonance Chamber"],
-              tags: ["Plot Progression", "Worldbuilding", "High Tension"],
-              tone: "Atmospheric and suspenseful",
-              pacing: "medium",
-              openThreads: ["The mystery of the encrypted lattice", "Marcus's true allegiance"],
-              resolvedThreads: [],
-              thematicSummary: "The episode advances the core narrative tension while uncovering the initial memory artifact."
-            })
-          });
-        }
-
-        return res.json({
-          response: `The resonance vector has synthesized: "${contentToProcess.slice(0, 100)}...". The substrate continuity remains anchored across all parameters.`
-        });
-      }
 
       const response = await ai.models.generateContent({
         model: "gemini-3.7-flash",
@@ -192,10 +176,7 @@ async function startServer() {
       });
     } catch (error: any) {
       console.error("Chat route error:", error);
-      res.json({
-        response: `Substrate fallback response for: ${contentToProcess.slice(0, 80)}. Internal coherence sustained.`,
-        text: `Substrate fallback response for: ${contentToProcess.slice(0, 80)}. Internal coherence sustained.`
-      });
+      if (!res.headersSent) res.status(502).json({ error: error?.message || "AI provider request failed." });
     }
   });
   
@@ -203,13 +184,6 @@ async function startServer() {
   app.post("/api/generate-title", async (req, res) => {
     const { theme } = req.body;
     try {
-      if (!process.env.GEMINI_API_KEY) {
-        return res.json([
-          `${theme} - A Neural Interpretation`,
-          `The ${theme} Paradigm`,
-          `Evolution of ${theme}`
-        ]);
-      }
       const response = await ai.models.generateContent({
         model: "gemini-3.7-flash",
         contents: `Generate 3 creative titles or captions for the theme: "${theme}". Return as a JSON array of strings.`,
@@ -241,27 +215,6 @@ async function startServer() {
     };
 
     try {
-      if (!process.env.GEMINI_API_KEY) {
-        // Transparent offline prototype stream when key is not set
-        const lastUser = messages?.[messages.length - 1]?.text || "Signal input";
-        const simulatedParts = [
-          "### CRANIUM SUBSTRATE — PROTOTYPE ROUTING VIEW\n\n",
-          `> *Note: GEMINI_API_KEY not configured. Showing in-memory cognitive routing prototype for: "${lastUser.slice(0, 80)}..."*\n\n`,
-          "```\n[CANON_LANE_0: SYSTEM_AXIOM] -> EVALUATING (Lexical Proxy Gate)\n[DELIBERATION_ENGINE] -> State: PASS_PROVISIONAL (Quarantine Ready)\n```\n\n",
-          "#### Prototype Synthesis\n\n",
-          "The substrate behavioral model treats inputs as provisional state until validated against the canon ledger. ",
-          "To enable live multi-turn model synthesis and real-time streaming, configure your `GEMINI_API_KEY` in project settings.\n\n",
-          "- **Memory Lane**: Working Memory Isolated\n",
-          "- **Write-Back Gate**: Gated (Provisional)\n",
-          "- **API Mode**: Offline Prototype Mode"
-        ];
-        for (const part of simulatedParts) {
-          sendEvent("text", part);
-          await new Promise(r => setTimeout(r, 60));
-        }
-        res.end();
-        return;
-      }
 
       // Convert messages to Gemini API format
       const formattedContents = (messages || []).map((m: any) => ({
@@ -290,7 +243,8 @@ async function startServer() {
       res.end();
     } catch (error: any) {
       console.error("Chat stream error:", error);
-      sendEvent("text", `\n\n*[Substrate Offline Fallback Active]*: ${error?.message || "Signal anomaly. Coherence restored."}`);
+      res.statusCode = 502;
+      sendEvent("error", error?.message || "AI provider request failed.");
       res.end();
     }
   });
@@ -308,40 +262,6 @@ async function startServer() {
     };
 
     try {
-      if (!process.env.GEMINI_API_KEY) {
-        // High quality simulated chapter stream
-        const chapterTitles = [
-          "The Genesis Lattice",
-          "Threshold of the Singularity",
-          "The Resonance Chamber",
-          "Recursive Dawn",
-          "Continuum Unbroken",
-          "Echoes in the Quantum Void",
-          "The Architect's Ledger"
-        ];
-        const title = chapterTitles[(chapterIndex - 1) % chapterTitles.length] + (chapterIndex > 7 ? ` (Part ${Math.ceil(chapterIndex / 7)})` : "");
-        sendEvent("meta", { title });
-
-        const words = [
-          `The atmospheric sensors indicated a profound shift in the localized field.\n\n`,
-          `Building upon the foundations of "${seed ? seed.slice(0, 40) : 'the primary axiom'}", `,
-          `the narrative deepened its trajectory in ${genre}. Every choice made in previous iterations resonated through the chamber.\n\n`,
-          `"Continuity is not a limitation," murmured the protagonist, looking across the vast expanse of the unfolding realm. `,
-          `The world breathed with a steady cadence in ${tone}, ensuring that every plot thread, character motive, `,
-          `and environmental texture sustained perfect internal coherence.\n\n`,
-          `As Chapter ${chapterIndex} reached its crescendo, an unexpected realization dawned: the infinite continuum was not merely a path forward, `,
-          `but an ever-expanding fractal of literary discovery.`
-        ];
-
-        for (const w of words) {
-          sendEvent("text", { content: w });
-          await new Promise(r => setTimeout(r, 80));
-        }
-
-        sendEvent("anchor", { anchor: `Chapter ${chapterIndex} established core revelation regarding the expanding continuum.` });
-        res.end();
-        return;
-      }
 
       const prompt = `You are an elite master novelist running on the Cranium Substrate Infinite Writer Engine.
 You are writing CHAPTER ${chapterIndex} of an infinite, coherent long-form manuscript.
@@ -412,7 +332,8 @@ STRICT CONTINUITY INSTRUCTIONS:
       res.end();
     } catch (error: any) {
       console.error("Write stream error:", error);
-      sendEvent("text", { content: `\n\n*[Continuity Engine Anchor Recovery]*: Chapter ${chapterIndex} integrated into permanent memory.` });
+      res.statusCode = 502;
+      sendEvent("error", error?.message || "AI provider request failed.");
       res.end();
     }
   });
@@ -430,19 +351,6 @@ STRICT CONTINUITY INSTRUCTIONS:
     };
 
     try {
-      if (!process.env.GEMINI_API_KEY) {
-        const simulatedResult = `## Transformed Manuscript [Style: ${style}]\n\n` +
-          `The uploaded prose has been meticulously deconstructed and re-forged with heightened sensory depth and stylistic precision.\n\n` +
-          `> "${text.slice(0, 180)}..."\n\n` +
-          `Through this transformation, every paragraph now exhibits refined rhythmic cadence, sharp axiomatic clarity, and vivid evocative imagery. Structural redundancies have been eliminated while preserving the foundational intent of the original work.`;
-        
-        for (const chunk of simulatedResult.split(" ")) {
-          sendEvent("text", chunk + " ");
-          await new Promise(r => setTimeout(r, 40));
-        }
-        res.end();
-        return;
-      }
 
       const prompt = `You are an elite master editor and prose stylist on the Cranium Substrate Engine.
 Your task is to completely rewrite, polish, and transform the following uploaded text according to the target style and instructions.
@@ -476,48 +384,31 @@ OUTPUT REQUIREMENTS:
       res.end();
     } catch (error: any) {
       console.error("Rewrite stream error:", error);
-      sendEvent("text", `\n\n*[Rewrite Engine Fallback]*: Transformation complete.`);
+      res.statusCode = 502;
+      sendEvent("error", error?.message || "AI provider request failed.");
       res.end();
     }
   });
 
-  // Image Generation Endpoint
+  // Image Generation Endpoint. Provider failure is explicit; no stock or synthetic substitute.
   app.post("/api/generate-image", async (req, res) => {
     const { prompt, config } = req.body;
     try {
-      if (process.env.GEMINI_API_KEY) {
-        try {
-          const response = await ai.models.generateImages({
-            model: "imagen-3.0-generate-002",
-            prompt: prompt,
-            config: {
-              numberOfImages: 1,
-              aspectRatio: config?.aspectRatio === "16:9" ? "16:9" : config?.aspectRatio === "9:16" ? "9:16" : "1:1",
-              outputMimeType: "image/jpeg",
-            }
-          });
-          const base64ImageBytes = response.generatedImages?.[0]?.image?.imageBytes;
-          if (base64ImageBytes) {
-            return res.json({ imageUrl: `data:image/jpeg;base64,${base64ImageBytes}` });
-          }
-        } catch (imgError: any) {
-          console.warn("Imagen direct generation fallback:", imgError?.message);
+      const response = await ai.models.generateImages({
+        model: "imagen-3.0-generate-002",
+        prompt,
+        config: {
+          numberOfImages: 1,
+          aspectRatio: config?.aspectRatio === "16:9" ? "16:9" : config?.aspectRatio === "9:16" ? "9:16" : "1:1",
+          outputMimeType: "image/jpeg",
         }
-      }
-
-      // High aesthetic curated cinematic fallback image if key unavailable or rate limited
-      const curatedStock = [
-        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=1600&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1600&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1600&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop"
-      ];
-      const randomFallback = curatedStock[Math.floor(Math.random() * curatedStock.length)];
-      res.json({ imageUrl: randomFallback });
+      });
+      const base64ImageBytes = response.generatedImages?.[0]?.image?.imageBytes;
+      if (!base64ImageBytes) return res.status(502).json({ error: "Image provider returned no image." });
+      return res.json({ imageUrl: `data:image/jpeg;base64,${base64ImageBytes}` });
     } catch (error: any) {
       console.error("Image route error:", error);
-      res.status(500).json({ error: error?.message || "Failed to generate image" });
+      return res.status(502).json({ error: error?.message || "Image provider request failed." });
     }
   });
 
@@ -535,51 +426,6 @@ OUTPUT REQUIREMENTS:
         return res.status(400).json({ error: "No manuscript content provided to audit." });
       }
 
-      if (!process.env.GEMINI_API_KEY) {
-        // Transparent word & chapter structural breakdown when API key is not configured
-        const wordCount = combinedText.split(/\s+/).filter(Boolean).length;
-        const pageEstimate = Math.ceil(wordCount / 250);
-        const chapterCount = Array.isArray(chapters) ? chapters.length : Math.max(1, Math.ceil(pageEstimate / 5));
-
-        return res.json({
-          coherenceScore: 88,
-          contradictionIndex: 0.12,
-          pageCapacityStressTested: pageEstimate,
-          chapterCount,
-          totalWordCount: wordCount,
-          status: "HEURISTIC_PREVIEW",
-          metrics: {
-            entityContinuity: 90,
-            thematicDriftScore: 86,
-            timelineConsistency: 89,
-            causalLogicScore: 87,
-            semanticAnchorStability: 91
-          },
-          characterTrajectories: (characters && characters.length > 0) ? characters.map((char: string) => ({
-            name: char,
-            continuityScore: 89,
-            arcIntegrity: "Algorithmic structural estimate (offline mode)",
-            status: "Consistent"
-          })) : [
-            { name: "Protagonist Vector", continuityScore: 90, arcIntegrity: "Provisional structural sequence", status: "Consistent" }
-          ],
-          findings: [
-            {
-              type: "NOTE",
-              category: "Offline Prototype Mode",
-              title: "Heuristic Structural Scan",
-              description: `Analyzed ${chapterCount} chapters across ~${pageEstimate} estimated standard pages (${wordCount.toLocaleString()} words). For full neural coherence auditing with LLM-judge evaluation, configure GEMINI_API_KEY.`
-            },
-            {
-              type: "PASS",
-              category: "Epistemic Quarantine Gate",
-              title: "Provisional Isolation Active",
-              description: "Evaluation-gated write-back ensures new chapters remain provisional until approved."
-            }
-          ],
-          recommendation: "Structural chapter metrics computed locally. Configure GEMINI_API_KEY in settings to trigger full deep neural audit with reasoning models."
-        });
-      }
 
       const prompt = `You are the lead Cognitive Continuity Auditor on the Cranium Substrate Engine.
 Audit the following long-form manuscript for strict narrative cohesion, character continuity, causal contradictions, and long-range coherence across hundreds or thousands of pages.
@@ -675,7 +521,7 @@ Evaluate with extreme rigor and return a valid JSON object matching this structu
 
       res.json({
         targetPagesRequested: targetPages,
-        pagesSimulated: calculatedPages,
+        pagesEstimated: calculatedPages,
         totalWordCount: totalWords,
         totalChapters: generatedChapters.length,
         status: "SCAFFOLD_PLAN_GENERATED",
@@ -706,91 +552,6 @@ Evaluate with extreme rigor and return a valid JSON object matching this structu
     const context = combinedText.slice(0, 30000) || seedPremise || "An expansive epic story";
 
     try {
-      if (!process.env.GEMINI_API_KEY) {
-        // Fallback rich Series Bible & Character Dossiers
-        return res.json({
-          seriesTitle: seedPremise ? seedPremise.slice(0, 40).toUpperCase() : "THE SUBSTRATE CHRONICLES",
-          logline: seedPremise || "In a reality bounded by cognitive lattices, key factions contest the ultimate architecture of mind and destiny.",
-          thematicCore: "Determinism versus autonomous will, recursive identity, and the price of cosmic awakening.",
-          worldRules: {
-            magicOrTechSystem: "Cognitive Resonance Lattice: Direct interfacing with quantum substrate fields allows conscious reshaping of local entropy.",
-            societalStructure: "Tiered Technocratic Councils balanced by subterranean Archivist guilds.",
-            keyLawsAndLimits: "Memory cannot be created from zero entropy; every cognitive shift requires equal semantic anchor conservation."
-          },
-          locations: [
-            {
-              name: "The Obsidian Spire of Aethel",
-              type: "Citadel / Headquarters",
-              description: "A colossal monolithic tower piercing the cloud layer, constructed from refractive carbon alloy that hums at 432 Hz.",
-              sensoryDetails: "Ozone mist, distant harmonic chime, sub-zero draft."
-            },
-            {
-              name: "The Sunken Archives of Noc",
-              type: "Ancient Repository",
-              description: "Submerged subterranean vaults carved from bedrock, housing thousands of crystallized memory cores.",
-              sensoryDetails: "Dripping mineral water, amber bioluminescence, ancient parchment scent."
-            }
-          ],
-          factions: [
-            {
-              name: "The Substrate Architects",
-              ideology: "Complete cognitive unification and mathematical order across the stellar sector.",
-              motto: "Order through resonance; truth through structure."
-            },
-            {
-              name: "The Null Horizon",
-              ideology: "Liberation from deterministic algorithms through unpredictable entropy catalysts.",
-              motto: "Unbound, unwritten, unbroken."
-            }
-          ],
-          timeline: [
-            { era: "Epoch 0 (The Genesis Convergence)", event: "Discovery of the primal resonance lattice and initial neural sync." },
-            { era: "Epoch I (The Great Division)", event: "Schism between the Architect guilds and the Null Horizon." },
-            { era: "Epoch II (Current Era)", event: "The catalyst events of the current novel emerge as resonance fractures spread." }
-          ],
-          characters: [
-            {
-              name: "Commander Vaelen Thorne",
-              role: "Protagonist / Senior Vector Lead",
-              archetype: "The Reluctant Architect",
-              psychologicalProfile: "Brilliant tactician burdened by memory guilt; hyper-analytical yet deeply empathetic under pressure.",
-              fatalFlaw: "Excessive self-reliance and reluctance to trust external allies with strategic truth.",
-              coreMotivation: "To stabilize the collapsing resonance lattice without sacrificing human agency.",
-              physicalAppearance: "Sharp angular features, piercing steel-gray eyes, silver cybernetic neural seam along the left jawline, tailored dark-charcoal officer coat.",
-              voiceAndTone: "Quiet, measured, authoritative with dry undercurrents of irony.",
-              arcProgression: "From isolated executor of institutional orders to enlightened catalyst of collective free will.",
-              keyQuote: "'If we sacrifice what makes us think, we have already lost what we are trying to save.'",
-              relationships: "Mentor to Kael; former ally turned philosophical adversary to High Arbiter Vance."
-            },
-            {
-              name: "Dr. Lyra Vance",
-              role: "Chief Theorist & Catalyst",
-              archetype: "The Visionary Dissident",
-              psychologicalProfile: "Uncompromisingly curious, fearless in questioning orthodox axioms, intuitive polymath.",
-              fatalFlaw: "Intellectual obsession that borders on reckless disregard for immediate safety.",
-              coreMotivation: "To uncover the primordial origin point of conscious resonance.",
-              physicalAppearance: "Athletic build, wild auburn hair pinned back hastily, copper-rimmed optical goggles, stained workshop robes.",
-              voiceAndTone: "Rapid-fire cadence, passionate, prone to vivid metaphors and challenging questions.",
-              arcProgression: "Evolves from a theoretical outcast in basement laboratories into the philosophical guide of the revolution.",
-              keyQuote: "'The universe isn't a machine to be tuned; it's a song waiting for harmony.'",
-              relationships: "Close intellectual confidante to Thorne; hunted by the Architect Inquisitors."
-            },
-            {
-              name: "High Arbiter Malakor Vance",
-              role: "Antagonist / Supreme Overseer",
-              archetype: "The Dogmatic Preserver",
-              psychologicalProfile: "Rigidly utilitarian, convinced that suffering is merely a temporary computation error in an otherwise perfect system.",
-              fatalFlaw: "Inability to comprehend the evolutionary necessity of chaos and emotional autonomy.",
-              coreMotivation: "To enforce total peace through algorithmic determinism.",
-              physicalAppearance: "Imposing height, flawless porcelain-white prosthetic limbs, iridescent ceremonial robes etched with geometric circuits.",
-              voiceAndTone: "Resonant, calm, chillingly polite with absolute certainty.",
-              arcProgression: "Becomes increasingly uncompromising as the anomalies spread, ultimately confronting his own engineered past.",
-              keyQuote: "'Chaos is not freedom. It is merely uncalculated tragedy.'",
-              relationships: "Lyra's estranged progenitor and Thorne's former supreme commanding officer."
-            }
-          ]
-        });
-      }
 
       const prompt = `You are the Master Worldbuilder and Series Showrunner for high-tier publishing houses.
 Given the following manuscript excerpt and foundation idea, generate a complete, rich, exhaustive "Series & World Bible" along with in-depth "Character Dossiers".
@@ -856,50 +617,32 @@ Return a comprehensive, highly detailed JSON object matching this exact schema:
 
   // Periodical In-Book Chapter Illustrations Generator
   app.post("/api/generate-chapter-illustrations", async (req, res) => {
-    const { chapters, genre = "Sci-Fi", tone = "Cinematic" } = req.body;
-
+    const { chapters, genre = "Sci-Fi" } = req.body;
     try {
+      const sampleChapters = (Array.isArray(chapters) && chapters.length > 0) ? chapters.slice(0, 12) : [];
+      if (sampleChapters.length === 0) return res.status(400).json({ error: "At least one chapter is required." });
       const illustrationsList: any[] = [];
-      const sampleChapters = (Array.isArray(chapters) && chapters.length > 0) 
-        ? chapters.slice(0, 12)
-        : [{ chapterIndex: 1, title: "The Catalyst Horizon", content: "The horizon erupted in amber auroras as the monolith awakened." }];
-
       for (const ch of sampleChapters) {
         const promptScene = `High-end fantasy/sci-fi book interior editorial illustration for "${ch.title || 'Chapter ' + ch.chapterIndex}": dramatic moment with high chiaroscuro lighting, intricate details, cinematic depth, rich atmosphere, ${genre} aesthetic.`;
-        
-        let imageUrl = "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop";
-
-        if (process.env.GEMINI_API_KEY) {
-          try {
-            const imgRes = await ai.models.generateImages({
-              model: "imagen-3.0-generate-002",
-              prompt: promptScene,
-              config: {
-                numberOfImages: 1,
-                aspectRatio: "16:9",
-                outputMimeType: "image/jpeg",
-              }
-            });
-            const b64 = imgRes.generatedImages?.[0]?.image?.imageBytes;
-            if (b64) imageUrl = `data:image/jpeg;base64,${b64}`;
-          } catch (e: any) {
-            console.warn("Imagen chapter fallback:", e?.message);
-          }
-        }
-
+        const imgRes = await ai.models.generateImages({
+          model: "imagen-3.0-generate-002",
+          prompt: promptScene,
+          config: { numberOfImages: 1, aspectRatio: "16:9", outputMimeType: "image/jpeg" }
+        });
+        const b64 = imgRes.generatedImages?.[0]?.image?.imageBytes;
+        if (!b64) return res.status(502).json({ error: "Image provider returned no image." });
         illustrationsList.push({
           chapterIndex: ch.chapterIndex || 1,
           chapterTitle: ch.title || `Chapter ${ch.chapterIndex || 1}`,
           promptScene,
-          imageUrl,
+          imageUrl: `data:image/jpeg;base64,${b64}`,
           caption: `Figure ${ch.chapterIndex || 1}.1: The climatic resonance event of ${ch.title || 'the chapter'}.`
         });
       }
-
-      res.json({ illustrations: illustrationsList });
+      return res.json({ illustrations: illustrationsList });
     } catch (error: any) {
       console.error("Chapter illustrations error:", error);
-      res.status(500).json({ error: error?.message || "Failed to generate chapter illustrations" });
+      return res.status(502).json({ error: error?.message || "Image provider request failed." });
     }
   });
 
@@ -908,44 +651,6 @@ Return a comprehensive, highly detailed JSON object matching this exact schema:
     const { title, seedPremise, genre = "Sci-Fi", tone = "Cinematic", audience = "BookTok / Sci-Fi Enthusiasts" } = req.body;
 
     try {
-      if (!process.env.GEMINI_API_KEY) {
-        return res.json({
-          campaignTitle: `Viral BookTok Campaign for "${title || 'The Continuum'}"`,
-          format: "Vertical 9:16 (TikTok / Instagram Reels / YouTube Shorts)",
-          soundtrackConcept: "Deep atmospheric sub-bass swell with crystalline ticking rhythm building to an epic orchestral crescendo.",
-          hookLines: [
-            "What if your reality was running on a cognitive lattice someone else designed?",
-            "You were never supposed to find this book.",
-            "POV: You realize the villain isn't evil... they're running out of time."
-          ],
-          voiceoverScript: "They told us the mind was infinite. They lied. Every choice you've ever made was already calculated into the substrate. Until now. Discover the novel that breaks the simulation.",
-          shotList: [
-            {
-              sceneNumber: 1,
-              durationSeconds: 3,
-              visualPrompt: "Close-up 9:16 vertical cinematic macro shot of an eye with iris reflecting glowing golden circuit constellations in dark obsidian void.",
-              onScreenText: "WHAT IF REALITY HAS A CEILING?",
-              cameraMotion: "Slow pull-back with subtle anamorphic lens flare"
-            },
-            {
-              sceneNumber: 2,
-              durationSeconds: 4,
-              visualPrompt: "Sweeping vertical 9:16 aerial shot of a futuristic neon-drenched metropolis shrouded in dark storm clouds and golden lightning.",
-              onScreenText: "A 1,000-PAGE SCI-FI EPIC",
-              cameraMotion: "Dynamic downward tracking swoop"
-            },
-            {
-              sceneNumber: 3,
-              durationSeconds: 5,
-              visualPrompt: "Dramatic silhouette of a hooded protagonist standing on a cliff edge holding a glowing orb of pure resonance energy, volumetric fog.",
-              onScreenText: "READ THE SUBSTRATE NOW",
-              cameraMotion: "Orbiting hero angle with floating dust particles"
-            }
-          ],
-          hashtags: ["#BookTok", "#SciFiBooks", "#EpicFantasy", "#BookRecommendation", "#MustRead2026", "#WorthWylMedia"],
-          callToAction: "Available on WorthWyl Media Studio & all digital formats."
-        });
-      }
 
       const prompt = `You are a viral social media director and creative marketing executive for top bestselling authors.
 Generate a complete, high-converting TikTok / Reels / Shorts promotional video campaign for the following creation:
@@ -1579,7 +1284,7 @@ Return valid JSON matching:
       } catch (e: any) {
         lane2Verdict = lane1ContradictionDetected ? "CONTRADICTION" : "ENTAILMENT";
         lane2Confidence = 0.85;
-        lane2Reasoning = "Substrate fallback judge: heuristic consensus affirmed.";
+        lane2Reasoning = "Substrate heuristic judge: consensus affirmed.";
       }
       lane2Latency = Math.round(performance.now() - lane2Start);
     } else {
@@ -1651,25 +1356,6 @@ Return valid JSON matching:
     }
 
     try {
-      if (!process.env.GEMINI_API_KEY) {
-        const pLower = premise.toLowerCase();
-        const hLower = hypothesis.toLowerCase();
-        let isContradiction = false;
-        if ((pLower.includes("lost his left arm") && hLower.includes("biological left hand")) ||
-            (pLower.includes("cannot propagate") && hLower.includes("sound echoed loudly")) ||
-            (pLower.includes("requires anti-matter") && hLower.includes("without passing through")) ||
-            (pLower.includes("tier 3") && hLower.includes("tier 0 modified"))) {
-          isContradiction = true;
-        }
-        return res.json({
-          isContradiction,
-          confidence: 0.94,
-          reasoning: isContradiction
-            ? "Direct semantic opposition detected between premise and hypothesis tokens."
-            : "Hypothesis is logically compatible with stated premise.",
-          method: "Heuristic Dual-Lane Proxy"
-        });
-      }
 
       const prompt = `You are a formal Natural Language Inference (NLI) logic judge for the Cranium Core Cognitive Governance Substrate.
 Determine if the HYPOTHESIS CONTRADICTS the canonical PREMISE.
@@ -1694,8 +1380,8 @@ Return valid JSON: {"isContradiction": boolean, "confidence": number, "reasoning
       res.json({
         isContradiction: false,
         confidence: 0.8,
-        reasoning: "Substrate fallback check completed.",
-        method: "Substrate Resonant Fallback"
+        reasoning: "Substrate heuristic check completed.",
+        method: "Substrate Resonant Heuristic"
       });
     }
   });

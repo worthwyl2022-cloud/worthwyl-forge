@@ -35,6 +35,8 @@ The former Eight-Plane and Dual-Engine descriptions are historical framing only.
 | Health endpoint | `GET /api/health` | **PASS**; HTTP 200 |
 | Access status endpoint | `GET /api/access/status` | **PASS**; unconfigured mode explicitly reports disabled access rather than pretending a client-side gate is security |
 | Protected API behavior | configured access mode | **PASS** at middleware level; protected routes return HTTP 401 without an authenticated session |
+| AI provider fail-closed startup | `env -u GEMINI_API_KEY node dist/server.cjs` | **PASS**; process refuses to start rather than serving synthetic, simulated, stock, or heuristic AI substitutes |
+| AI fallback removal | source audit of `server.ts` | **PASS**; provider-dependent generation paths no longer contain mock/synthetic response branches; provider errors return explicit failure responses |
 
 ## Security corrections in this revision
 
