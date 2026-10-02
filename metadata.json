@@ -1,6 +1,6 @@
 {
-  "name": "WorthWyl OS v. 2",
-  "description": "Cranium Core — Directive-Governed Cognitive Substrate & Formal Authority Kernel. Real-time monotonic state verification, canon permanence, and quarantine bounds.",
+  "name": "WorthWyl Studio",
+  "description": "WorthWyl Studio — governed creation, operations, diligence, and project workspace. Canonical authority remains exclusively in the Convertible Cranium Kernel.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

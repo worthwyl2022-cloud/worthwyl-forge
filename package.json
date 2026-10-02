@@ -1,15 +1,16 @@
 {
-  "name": "worthwyl-forge",
+  "name": "worthwyl-studio",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx server.ts",
-    "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
+    "dev": "node ./node_modules/tsx/dist/cli.mjs server.ts",
+    "build": "node ./node_modules/vite/bin/vite.js build && node ./node_modules/esbuild/bin/esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
     "start": "node dist/server.cjs",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit",
-    "test": "npm run lint",
+    "lint": "node ./node_modules/typescript/bin/tsc --noEmit",
+    "test": "npm run lint && npm run audit:architecture",
+    "audit:architecture": "bash scripts/audit-architecture.sh",
     "android:test": "cd android && ./gradlew test --no-daemon",
     "android:assemble": "cd android && ./gradlew assembleDebug --no-daemon"
   },

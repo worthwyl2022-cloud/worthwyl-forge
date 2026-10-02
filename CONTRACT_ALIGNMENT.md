@@ -1,7 +1,17 @@
 # Contract Alignment
 
-This repository is a supporting, historical, application, content, or demonstration surface in the Cranium substrate ecosystem. It is **not** an authority source.
+WorthWyl Studio is a supporting/operator surface in the Convertible Cranium ecosystem.
 
-The sole canonical semantic and authority source is [cranium-kernel](https://github.com/worthwyl2022-cloud/cranium-kernel), especially its [canonical semantic contract](https://github.com/worthwyl2022-cloud/cranium-kernel/blob/main/docs/CANONICAL_SEMANTIC_CONTRACT.json). This repository may consume Kernel requests, verified receipts, or documentation; it may not grant authority, mutate canonical state, issue canonical receipts, or define competing semantics.
+The **Convertible Cranium Kernel is the sole canonical semantic and authority source**. Studio may consume Kernel requests, verified receipts, documentation, and bounded evidence. It may not grant authority, mutate canonical state, issue canonical receipts, or define competing semantics.
 
-Any local state, simulator, browser state, generated report, fixture, screenshot, model output, or historical implementation is non-canonical and must be labeled with its evidence status. Acquisition claims require a source commit, exact verification command, real result, and residual limitation.
+The current architecture is Dual-Substrate / Quad-Engine:
+- Cranium AI
+- Synapse
+- Governance Review Juror One
+- Governance Review Juror Two
+
+The two jurors have distinct mandates and processes and neither issues authority.
+
+Local state, browser state, fixtures, generated reports, screenshots, simulations, and model output are non-canonical. Acquisition claims require a source revision, exact verification command, actual result, and residual limitation.
+
+Historical Eight-Plane and Dual-Engine terminology is not current architecture.

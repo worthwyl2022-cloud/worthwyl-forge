@@ -1,6 +1,6 @@
 {
-  "name": "WorthWyl OS v. 2",
-  "short_name": "WorthWyl",
+  "name": "WorthWyl Studio",
+  "short_name": "Studio",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0f0f0f",

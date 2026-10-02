@@ -1,45 +1,61 @@
-# WorthWyl Forge Verification Record
+# WorthWyl Studio Verification Record
 
-## Scope
+**Verification date:** 2026-10-02  
+**Surface:** WorthWyl Studio hybrid creation/operator surface  
+**Authority boundary:** Convertible Cranium Kernel only
 
-This record covers the Forge web surface, the new Android product boundary, and the platform-neutral shared core. It does not certify the complete account-wide ecosystem or establish legal ownership, licensing, acquisition value, production deployment, or Android release readiness.
+This record covers the Studio web surface and its local governance-boundary adapter. It does not certify the complete Convertible Cranium ecosystem, legal ownership, acquisition value, Android release readiness, production deployment, or Kernel implementation.
 
-## Results
+## Current architecture
 
-| Surface | Command | Result | Evidence |
-|---|---|---|---|
-| Forge web typecheck | `npm run lint` | **PASS** | TypeScript completed with exit code 0 on 2026-09-17 in the sandbox |
-| Forge web production build | `npm run build` | **PASS** | Vite client and bundled server completed with exit code 0 on 2026-09-17 |
-| Forge shared-core tests | `cd android && ./gradlew :shared-core:test` | **NOT PASS** | Local machine lacks a usable Java 21 compiler/toolchain; hosted CI is required |
-| Forge Android unit tests | `cd android && ./gradlew :app:test` | **NOT PASS** | Local machine has no Android SDK configured |
-| Forge debug APK assembly | `cd android && ./gradlew :app:assembleDebug` | **NOT PASS** | Local machine lacks Android SDK and a usable Java compiler toolchain |
-| Boot-drive structure | `./HEALTH_CHECK.sh` | **PASS** | All required control files and seven product directories were present |
-| Canonical TypeScript kernel | `npm run lint`, `npm run build` | **PASS** | Typecheck/build completed with exit code 0 |
-| Canonical authority conformance | `npm run verify:conformance` | **PASS** | 8 of 8 vectors passed; 0 failed |
-| Forge authority adapter | POST `/api/substrate/evaluate-state-transition` | **PASS** | Allowed transition, fail-closed violation response, and deterministic replay receipt verified locally |
+The Studio is aligned to the current Dual-Substrate / Quad-Engine architecture:
 
-## Interpretation
+- Cranium AI: intelligence and orchestration.
+- Synapse: evidence and assessment.
+- Governance Review Juror One: constructive review.
+- Governance Review Juror Two: adversarial review.
+- Kernel: sole canonical authority.
+- Listener: untrusted ingress.
+- Commander OS: operational control surface.
+- Miracle Memory: governed continuity.
+- Circuit Breaker / COMA: cross-cutting runtime containment and recovery.
 
-The web Forge remains build-verified in this environment. The Android source boundary exists and includes a native launcher activity, a platform-neutral Kotlin core, a unit test, and a dedicated CI workflow. **Android is not build-verified yet.** The correct status is `NOT PASS` until the hosted Android workflow completes successfully on a clean runner.
+The former Eight-Plane and Dual-Engine descriptions are historical framing only.
 
-The Forge web authority adapter now reports the canonical protocol version, hashes its request material with SHA-256, rejects simulated lane bypasses, dangling causal traces, empty payloads, invalid tiers, and escalation spikes, and returns the original receipt for an identical replay. This is an adapter-level verification; it does not replace the canonical Kernel's persisted authority engine.
+## Verification results
 
-The Android shell deliberately reports `NOT_CONFIGURED` and `NOT_ESTABLISHED` for remote inference, external actions, durable synchronization, and the complete Forge workspace. Those statuses are product behavior, not missing marketing language.
+| Check | Command | Result |
+|---|---|---|
+| Architecture audit | `npm run audit:architecture` | **PASS** |
+| TypeScript typecheck | `npm run lint` | **PASS** |
+| Production client/server build | `npm run build` | **PASS** |
+| Dependency install | `npm ci --ignore-scripts` | **PASS**, 293 packages audited, 0 vulnerabilities reported |
+| Local transition adapter | `POST /api/substrate/evaluate-state-transition` | **Design hardened** as non-authoritative assessment; it explicitly returns `authorityIssued: false` and identifies the Kernel as canonical authority |
 
-## Required acquisition disclosure
+## Security corrections in this revision
 
-Do not describe WorthWyl Forge as a fully ported or Android-release-ready product based on this commit alone. The evidence supports the narrower statement that Forge has a separately scoped Android product boundary under active verification, while the existing web/server surface is build-verified.
+- Removed the hardcoded `CRANIUM2026` client credential.
+- Removed browser-local password storage and client-side gate disabling.
+- Added server-backed access control with an HttpOnly, SameSite session cookie when enabled.
+- Protected API routes behind the server access boundary when configured.
+- Reclassified the local transition route as a **preflight assessment**, not a receipt or authority engine.
+- Explicitly return `canonicalAuthoritySource: "Convertible Cranium Kernel"`.
+- Added an architecture audit that fails on active-source legacy architecture terminology and embedded credentials.
+- Rebranded the public surface as **WorthWyl Studio** while retaining the Forge implementation as an internal workflow/creation engine.
 
-## Reproduction
+## Build note
 
-```bash
-npm ci
-npm run lint
-npm run build
-cd android
-./gradlew :shared-core:test --no-daemon --stacktrace
-./gradlew :app:test --no-daemon --stacktrace
-./gradlew :app:assembleDebug --no-daemon --stacktrace
-```
+The Termux environment did not expose npm-installed executable shims under `node_modules/.bin`. The package scripts were therefore hardened to invoke the installed TypeScript, Vite, esbuild, and tsx entrypoints directly. The actual TypeScript and production build then completed successfully.
 
-The Android commands require JDK 21 with a compiler, Android SDK platform 35, and build tools 35.0.0. The repository workflow installs and invokes those dependencies explicitly.
+The Vite build reports a bundle-size warning for the main client chunk (~1.23 MB minified). This is a performance optimization item, not a correctness failure. It should be addressed with route-level code splitting before high-scale production deployment.
+
+## Remaining evidence boundaries
+
+- Android source exists but Android release readiness remains separately unverified.
+- Kernel runtime authority claims remain governed by the Kernel's own evidence, not by Studio.
+- Any fixture, simulation, deterministic offline result, or generated demonstration must remain labeled as such.
+- Production access configuration must be supplied through deployment secrets; no credential belongs in source control.
+
+## Acceptance statement
+
+The current Studio surface is documentation- and build-aligned with the 2026-10-02 Convertible Cranium architecture baseline. No local Studio path is represented as a replacement for Kernel authority.

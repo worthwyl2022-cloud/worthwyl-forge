@@ -30,6 +30,7 @@ import {
   Database
 } from "lucide-react";
 import { CraniumOverview } from "./components/CraniumOverview";
+import { CreatorStudio } from "./components/CreatorStudio";
 import { FormalAuthorityKernel } from "./components/FormalAuthorityKernel";
 import { QuarantineInbox } from "./components/QuarantineInbox";
 import { CanonRegistry } from "./components/CanonRegistry";
@@ -53,7 +54,7 @@ export default function App() {
     exportDiligencePack 
   } = projectManager;
 
-  const [activeView, setActiveView] = useState<'overview' | 'kernel' | 'quarantine' | 'canon' | 'benchmark' | 'console'>('overview');
+  const [activeView, setActiveView] = useState<'overview' | 'creator' | 'kernel' | 'quarantine' | 'canon' | 'benchmark' | 'console'>('overview');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasCopiedMd, setHasCopiedMd] = useState(false);
   const [isDemoOpen, setIsDemoOpen] = useState(false);
@@ -68,10 +69,6 @@ export default function App() {
   const [newProjAxiomTitle, setNewProjAxiomTitle] = useState("");
   const [newProjAxiomText, setNewProjAxiomText] = useState("");
   const [isCreatingProject, setIsCreatingProject] = useState(false);
-
-  // Diligence Gate State
-  const [portalKey, setPortalKey] = useState(() => localStorage.getItem("cranium_custom_password") || "CRANIUM2026");
-  const [isGateEnabled, setIsGateEnabled] = useState(() => localStorage.getItem("cranium_gate_enabled") !== "disabled");
 
   const handleDownloadZip = () => {
     try {
@@ -150,10 +147,10 @@ export default function App() {
           </div>
           <div className="flex flex-col">
             <h1 className="text-xs sm:text-base font-black tracking-wider text-white flex items-center gap-1.5 font-sans">
-              CRANIUM <span className="text-amber-400">CORE</span>
+              WORTHWYL <span className="text-amber-400">STUDIO</span>
             </h1>
             <span className="text-[8px] sm:text-[9px] font-mono tracking-widest text-amber-400/80 -mt-0.5 uppercase hidden md:block">
-              Directive-Governed Cognitive Substrate
+              Creation • Operations • Governance
             </span>
           </div>
         </div>
@@ -235,6 +232,19 @@ export default function App() {
 
         {/* Center Mode Switcher Tabs */}
         <nav className="flex items-center bg-black/50 p-1 rounded-full border border-white/10 shadow-inner overflow-x-auto max-w-full custom-scrollbar py-1 shrink-0 order-4 sm:order-3">
+          <button
+            onClick={() => setActiveView('creator')}
+            className={cn(
+              "flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap",
+              activeView === 'creator'
+                ? "bg-amber-500 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]"
+                : "text-slate-400 hover:text-white"
+            )}
+          >
+            <Sparkles size={13} className={activeView === 'creator' ? "text-black" : "text-amber-400"} />
+            <span>Creator Studio</span>
+          </button>
+
           <button
             onClick={() => setActiveView('overview')}
             className={cn(
@@ -328,7 +338,7 @@ export default function App() {
           <button
             onClick={() => setIsDemoOpen(true)}
             className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-full bg-amber-500 hover:bg-amber-400 text-black text-xs font-black uppercase tracking-wider shadow-[0_0_15px_rgba(245,158,11,0.4)] transition-all cursor-pointer"
-            title="Launch 90-Second Diligence Demo"
+            title="Launch Diligence Walkthrough"
           >
             <Play size={12} className="fill-black" />
             <span className="hidden sm:inline">90s Demo</span>
@@ -337,7 +347,7 @@ export default function App() {
           <button
             onClick={() => setIsMenuOpen(true)}
             className="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-300 hover:text-white transition-all cursor-pointer"
-            title="Substrate Settings & Exports"
+            title="Studio Settings & Diligence"
           >
             <Menu size={16} />
           </button>
@@ -346,6 +356,10 @@ export default function App() {
 
       {/* Main View Area */}
       <main className="flex-1 flex overflow-hidden relative">
+        {activeView === 'creator' && (
+          <CreatorStudio />
+        )}
+
         {activeView === 'overview' && (
           <CraniumOverview onNavigateTab={(tab) => setActiveView(tab)} />
         )}
@@ -495,10 +509,10 @@ export default function App() {
                   </div>
                   <div>
                     <h3 className="text-base font-black tracking-wider text-white">
-                      CRANIUM CORE DILIGENCE
+                      WORTHWYL STUDIO DILIGENCE
                     </h3>
                     <p className="text-[11px] text-amber-300 font-mono">
-                      74 KOTLIN MODULES • VERIFIED REPO
+                      DUAL-SUBSTRATE / QUAD-ENGINE • KERNEL-AUTHORITY BOUNDARY
                     </p>
                   </div>
                 </div>
@@ -585,38 +599,15 @@ export default function App() {
                 </button>
               </div>
 
-              {/* Diligence Password Gate Controls */}
-              <div className="p-4 rounded-xl bg-black/50 border border-amber-500/20 space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Lock size={15} className="text-amber-400" />
-                    <span className="text-xs font-black uppercase tracking-wider text-white">
-                      Diligence Portal Password Gate
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => {
-                      const nextState = !isGateEnabled;
-                      setIsGateEnabled(nextState);
-                      localStorage.setItem("cranium_gate_enabled", nextState ? "enabled" : "disabled");
-                      if (!nextState) {
-                        localStorage.setItem("cranium_auth_token", "granted");
-                      }
-                    }}
-                    className={cn(
-                      "text-[10px] font-mono font-bold px-2.5 py-1 rounded-full border transition-all cursor-pointer",
-                      isGateEnabled
-                        ? "bg-emerald-950/60 text-emerald-300 border-emerald-500/40"
-                        : "bg-white/5 text-neutral-400 border-white/10"
-                    )}
-                  >
-                    {isGateEnabled ? "GATE: ACTIVE" : "GATE: DISABLED"}
-                  </button>
+              <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/30 space-y-2">
+                <div className="flex items-center gap-2">
+                  <Lock size={15} className="text-emerald-400" />
+                  <span className="text-xs font-bold uppercase text-white">Server-backed diligence session</span>
                 </div>
-
-                <div className="text-[11px] font-mono text-neutral-300">
-                  Active Access Key: <code className="text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-500/30 font-bold">{portalKey}</code>
-                </div>
+                <p className="text-[11px] text-slate-300">
+                  Credentials are never stored in browser storage. Protected API routes require the server-issued HttpOnly session.
+                  Canonical authority remains exclusively in the Convertible Cranium Kernel.
+                </p>
               </div>
 
               <button 

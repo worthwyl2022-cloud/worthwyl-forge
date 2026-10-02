@@ -40,11 +40,62 @@ async function startServer() {
     }
   });
 
-  // Forge adapter boundary: the web surface may propose a transition, but it
-  // cannot bypass deterministic validation. The canonical Kernel remains the
-  // authority source; this endpoint is a bounded local adapter for the UI.
-  const transitionReceipts = new Map<string, { nonce: number; payloadDigest: string; passed: boolean; violations: string[] }>();
-  let transitionNonce = 0;
+  // Studio adapter boundary: this route is a non-authoritative preflight assessment.
+  // It intentionally does NOT issue receipts, mutate canonical state, or grant authority.
+  const transitionAssessments = new Map<string, { assessmentId: number; payloadDigest: string; passed: boolean; violations: string[] }>();
+  let assessmentSequence = 0;
+
+  const ACCESS_COOKIE = "wws_session";
+  const accessSecret = process.env.WORTHWYL_STUDIO_ACCESS_SECRET || "";
+  const accessCode = process.env.WORTHWYL_STUDIO_ACCESS_CODE || "";
+  const accessEnabled = process.env.WORTHWYL_STUDIO_ACCESS_ENABLED === "true" || Boolean(accessCode && accessSecret);
+
+  const constantTimeEqual = (a: string, b: string) => {
+    const aa = Buffer.from(a);
+    const bb = Buffer.from(b);
+    return aa.length === bb.length && crypto.timingSafeEqual(aa, bb);
+  };
+  const sessionToken = (expiresAt: number) =>
+    crypto.createHmac("sha256", accessSecret).update(`worthwyl-studio:${expiresAt}`).digest("hex");
+  const validSession = (req: express.Request) => {
+    if (!accessEnabled) return true;
+    const raw = req.headers.cookie?.split(";").map((v) => v.trim()).find((v) => v.startsWith(`${ACCESS_COOKIE}=`))?.slice(ACCESS_COOKIE.length + 1);
+    if (!raw) return false;
+    const [expiresText, token] = raw.split(".");
+    const expiresAt = Number(expiresText);
+    if (!Number.isSafeInteger(expiresAt) || expiresAt <= Date.now() || !token) return false;
+    return constantTimeEqual(token, sessionToken(expiresAt));
+  };
+  const requireAccess = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (!validSession(req)) return res.status(401).json({ error: "Studio authorization required." });
+    next();
+  };
+
+  app.get("/api/access/status", (req, res) => {
+    res.json({ enabled: accessEnabled, authenticated: validSession(req) });
+  });
+
+  app.post("/api/access/unlock", (req, res) => {
+    if (!accessEnabled) return res.json({ enabled: false, authenticated: true });
+    if (!accessCode || !accessSecret) return res.status(503).json({ error: "Studio access is not configured." });
+    const supplied = typeof req.body?.code === "string" ? req.body.code : "";
+    if (!constantTimeEqual(supplied, accessCode)) return res.status(401).json({ error: "Authorization failed." });
+    const expiresAt = Date.now() + 8 * 60 * 60 * 1000;
+    const token = sessionToken(expiresAt);
+    res.setHeader("Set-Cookie", `${ACCESS_COOKIE}=${expiresAt}.${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800${process.env.NODE_ENV === "production" ? "; Secure" : ""}`);
+    res.json({ enabled: true, authenticated: true, expiresAt });
+  });
+
+  app.post("/api/access/logout", (req, res) => {
+    res.setHeader("Set-Cookie", `${ACCESS_COOKIE}=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0`);
+    res.json({ authenticated: false });
+  });
+
+  // Public liveness endpoint. All other API routes are protected when Studio access is enabled.
+  app.get("/api/health", (req, res) => {
+    res.json({ status: "ok", timestamp: new Date().toISOString() });
+  });
+  app.use("/api", requireAccess);
 
   app.post("/api/substrate/evaluate-state-transition", (req, res) => {
     const {
@@ -78,28 +129,25 @@ async function startServer() {
       payload,
     });
     const payloadDigest = crypto.createHash("sha256").update(requestMaterial).digest("hex");
-    const prior = transitionReceipts.get(payloadDigest);
-    const receipt = prior ?? {
-      nonce: ++transitionNonce,
+    const prior = transitionAssessments.get(payloadDigest);
+    const assessment = prior ?? {
+      assessmentId: ++assessmentSequence,
       payloadDigest,
       passed: violations.length === 0,
       violations,
     };
-    transitionReceipts.set(payloadDigest, receipt);
+    transitionAssessments.set(payloadDigest, assessment);
 
     res.json({
       protocolVersion: "cranium-authority-protocol-v1.0.0",
-      nonce: receipt.nonce,
-      payloadDigest: receipt.payloadDigest,
-      passed: receipt.passed,
-      violations: receipt.violations,
-      replay: Boolean(prior),
+      assessmentId: assessment.assessmentId,
+      payloadDigest: assessment.payloadDigest,
+      passed: assessment.passed,
+      violations: assessment.violations,
+      replayObserved: Boolean(prior),
+      authorityIssued: false,
+      canonicalAuthoritySource: "Convertible Cranium Kernel",
     });
-  });
-
-  // Health check
-  app.get("/api/health", (req, res) => {
-    res.json({ status: "ok", timestamp: new Date().toISOString() });
   });
 
   // Standard non-streaming chat & cognitive analysis

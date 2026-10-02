@@ -1,6 +1,11 @@
 # Authority Role
 
-**Role:** Public UI and demonstration surface.  
-**Canonical authority:** `cranium-kernel`  
+**Product:** WorthWyl Studio  
+**Internal engine:** Forge workflow/creation engine  
+**Canonical authority:** Convertible Cranium Kernel
 
-Forge may request, display, or simulate authority behavior. It must not issue canonical receipts or mutate canonical state. Browser state, localStorage, and demo objects are non-canonical by definition.
+WorthWyl Studio may request, display, assess, and present governed behavior. It must not issue canonical authority, canonical receipts, or mutate canonical Kernel state.
+
+Browser state, local state, fixtures, generated reports, simulations, screenshots, and model outputs are non-canonical unless independently admitted through the actual governed authority path.
+
+A local preflight assessment is an assessment only. It must never be described as a Kernel receipt or authority decision.

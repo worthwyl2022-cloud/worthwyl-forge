@@ -1,27 +1,13 @@
-# WorthWyl Forge Category Position
+# WorthWyl Studio Category Position
 
-## Evidence-backed position
+WorthWyl Studio is a **creation, workspace, operations, and diligence surface within the Convertible Cranium governance ecosystem**.
 
-WorthWyl Forge is a **creation, workspace, and operator surface for a broader cognitive-substrate governance ecosystem**. Its current repository contains a web/server application, embedded substrate research code, governance-oriented interfaces, benchmark and receipt views, and a newly scoped Android product boundary.
+The public product identity is WorthWyl Studio. The retained Forge code is an internal workflow/creation engine and should be treated as implementation heritage, not as a competing product identity or authority layer.
 
-The broader ecosystem architecture defines governance as infrastructure rather than as a chat feature. The canonical Cranium Kernel implements an authority boundary with canonical request hashing, replay inspection, boundary validation, durable receipt verification, and conformance vectors. The boot-drive Constitution defines the governing principles: truth over fluency, human authority over consequential action, least privilege, provenance, privacy, no self-expansion, proportional safety, and recovery without circumvention.
+The current ecosystem architecture is Dual-Substrate / Quad-Engine: Cranium AI, Synapse, Governance Review Juror One, and Governance Review Juror Two. The Convertible Cranium Kernel is the sole canonical authority source.
 
-These are **architectural and implementation facts** supported by repository source, tests, workflows, and the boot-drive documents.
+Studio does not independently establish market leadership, production certification, legal ownership, acquisition value, or commercial adoption. Those claims require separate evidence.
 
-## Claims that are not established
+The current repository may contain deterministic offline functionality, fixtures, historical substrate material, and bounded demonstrations. Those artifacts must remain explicitly labeled and must never be represented as live Kernel evidence.
 
-The repository does not, by itself, establish that Forge or the ecosystem is a market-leading, industry-standard, category-defining, production-hardened, independently validated, or commercially adopted platform. No such claim should appear in acquisition materials unless separate evidence supports it.
-
-The current evidence also does not establish that Forge has a fully ported Android workspace, offline model inference, production connector execution, durable Android synchronization, multi-tenant isolation, or a completed acquisition diligence package.
-
-## Acquisition-safe wording
-
-The strongest supported wording is:
-
-> WorthWyl Forge is an operator and creation surface within a governed cognitive-substrate ecosystem. The ecosystem treats authority, evidence, permissions, provenance, memory, and recovery as infrastructure boundaries rather than as implicit application behavior. Forge currently has a build-verified web surface and a separately scoped Android product boundary under active verification.
-
-A stronger category claim may be proposed as a **thesis** for buyer evaluation, but it must remain labeled as a thesis until supported by independent market evidence, customer evidence, deployment evidence, and comparative analysis.
-
-## Required evidence before stronger claims
-
-Before using “category-defining” as a factual acquisition claim, add independently reviewable evidence for market category definition, customer adoption, competitive differentiation, production deployments, security review, operational reliability, Android release readiness, and legal or licensing clearance. Until then, use “category thesis” or “governance-substrate architecture,” not an established market fact.
+> **WorthWyl Studio is where the human creates, operates, reviews, and prepares the work. Convertible Cranium is where authority is governed.**

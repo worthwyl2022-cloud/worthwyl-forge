@@ -1,38 +1,72 @@
-# WorthWyl Forge
+# WorthWyl Studio
 
-**Status: Public demonstration & operator surface — Non-canonical**
+**Status:** Acquisition-facing creation, operations, and governance surface. Supporting/non-canonical.
 
-The sole canonical authority source is [`cranium-kernel`](https://github.com/worthwyl2022-cloud/cranium-kernel).
+WorthWyl Studio is the hybrid evolution of the former WorthWyl Forge surface. The **Studio** is the product/operator identity; the retained **Forge engine** is the internal workflow and creation machinery. This preserves the useful implementation while retiring Forge as the public product name.
 
-WorthWyl Forge is the public demonstration and operator surface for the Convertible Cranium portfolio. It presents the multi-plane cognitive governance substrate through a runnable application. It does **not** independently grant authority, replace the Kernel, or constitute security certification.
+## Current architecture
 
----
+WorthWyl Studio participates in Convertible Cranium's **Dual-Substrate / Quad-Engine** architecture:
 
-## Core invariant
+- **Cranium AI**: intelligence and orchestration.
+- **Synapse**: evidence and assessment.
+- **Governance Review Juror One**: constructive coherence and evidence-sufficiency review.
+- **Governance Review Juror Two**: adversarial contradiction and boundary review.
 
-> Cognition may come from anywhere.  
-> Authority comes only through Convertible Cranium.
+The jurors have intentionally different mandates and processes. Neither issues authority.
 
-## Demonstration boundaries
+**Convertible Cranium Kernel is the sole canonical authority source.**
 
-Forge is a presentation and integration surface. Proprietary authority, receipt, and recovery implementations live in the private Kernel and related controlled repositories.
+Studio runtime surfaces:
+- **Commander OS**: operational control surface.
+- **Cranium Listener**: untrusted ingress.
+- **Miracle Memory**: governed continuity.
+- **Circuit Breaker / COMA**: cross-cutting runtime containment and recovery.
+- **WorthWyl Studio**: human-facing creation, operations, diligence, and project workspace.
+- **Forge engine**: internal workflow/creation machinery retained as an implementation layer, not an authority source.
 
-## What is implemented here
+## Authority boundary
 
-- Browser application under `src/`
-- Express entrypoint
-- Public-facing substrate and evidence presentation
-- Deterministic demonstration paths
+Studio may propose, collect, transform, assess, visualize, and present. It may not:
+- issue canonical authority;
+- issue canonical receipts;
+- mutate canonical Kernel state directly;
+- redefine Kernel semantics;
+- treat browser/local state as canonical;
+- represent a simulation or fixture as production evidence.
 
-## Run locally
+Local assessments are explicitly non-authoritative and identify the Kernel as the canonical authority source.
+
+## Security boundary
+
+Diligence access is server-backed when enabled through:
+- `WORTHWYL_STUDIO_ACCESS_ENABLED=true`
+- `WORTHWYL_STUDIO_ACCESS_CODE`
+- `WORTHWYL_STUDIO_ACCESS_SECRET`
+
+Credentials are not embedded in client code or browser storage. Authenticated sessions use an HttpOnly, SameSite cookie with a bounded lifetime.
+
+If access is not configured, the application reports that fact rather than exposing a fake security gate.
+
+## Verification
+
+Required local verification:
 
 ```bash
 npm ci
 npm run lint
 npm run build
-npm run dev
+npm test
+npm run audit:architecture
 ```
 
-## Ownership
+Android verification remains separate and must not be represented as complete until the required Android toolchain and CI evidence pass.
 
-Presented through Convertible Cranium Engineering (WorthWyl Media). See license and security policy for terms.
+## Historical terminology
+
+The former **Eight-Plane** and **Dual-Engine** descriptions are historical framing only. They are not the current governance architecture.
+
+## Product thesis
+
+**WorthWyl Studio is where the human operates the work. Convertible Cranium is where authority is governed.**
+

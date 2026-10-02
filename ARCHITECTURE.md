@@ -1,27 +1,63 @@
-# Architecture and Design Record
+# WorthWyl Studio Architecture
 
-## Repository role
+## Product identity
 
-**Product, integration, or supporting component repository.**
+**WorthWyl Studio** is the human-facing hybrid creation and operations environment.
 
-This document records engineering evidence for technical diligence. It does not establish legal ownership, inventorship, assignment, trademark rights, or third-party license compliance.
+**Forge** remains the internal workflow/creation engine. It is an implementation layer, not the public authority boundary.
 
 ## System boundary
 
-Describe what this repository owns and what it consumes from other repositories, services, runtimes, registries, or external providers. Identify whether this repository is canonical, supporting, demonstrative, or historical.
+Studio sits above the governed Convertible Cranium substrate. It can orchestrate bounded workflows and present evidence, but canonical authority remains outside the Studio.
 
-## Core concepts and invariants
+### Current Convertible Cranium architecture
 
-Record the concepts that must remain stable for the architecture to retain its intended behavior. State the authority, identity, state-transition, governance, safety, and compatibility rules that are enforced by code or tests. Do not describe an invariant as enforced unless a code path or test demonstrates it.
+**Dual-Substrate / Quad-Engine**
 
-## Data and control flow
+1. Cranium AI — intelligence and orchestration.
+2. Synapse — evidence and assessment.
+3. Governance Review Juror One — constructive review.
+4. Governance Review Juror Two — adversarial review.
 
-Document the primary inputs, transformations, state transitions, outputs, and failure paths. Link to the implementation and tests that demonstrate each critical path.
+The jurors deliberately use different review mandates and processes. Neither is authoritative.
 
-## Extension points
+### Canonical authority
 
-Record supported interfaces, adapters, providers, schemas, contracts, and configuration points. Distinguish stable interfaces from experimental or internal ones.
+The Convertible Cranium Kernel is the sole canonical authority source.
 
-## Canonicality decision
+No Studio state, Forge workflow, model output, Synapse result, juror result, memory entry, browser state, receipt display, or external attestation can synthesize authority.
 
-Canonical status: **Supporting surface; cranium-kernel is the sole canonical authority source**. This repository must not define a competing authority implementation.
+## Runtime flow
+
+Listener → Studio/Commander operational context → AI proposal → Synapse assessment → Juror One / Juror Two review → governed request → Kernel decision → execution → receipt → Miracle Memory
+
+Circuit Breaker / COMA can interrupt, quarantine, or roll back runtime execution without becoming an authority source.
+
+## Studio responsibilities
+
+- Creation workflows.
+- Project/domain workspaces.
+- Canon and continuity presentation.
+- Diligence packaging.
+- Benchmark/test visualization.
+- Operator controls.
+- Bounded AI-assisted authoring.
+- Evidence navigation.
+
+## Explicit non-responsibilities
+
+Studio does not:
+- replace the Kernel;
+- define canonical semantics;
+- issue canonical receipts;
+- bypass the two governance-review paths;
+- convert simulations, fixtures, or local state into evidence;
+- silently promote provisional content into canonical state.
+
+## Evidence rule
+
+Every acquisition-grade claim must identify its source revision, verification command, actual result, and residual limitation. Missing evidence is represented as missing, not cosmetically converted into a green badge.
+
+## Historical terminology
+
+Eight-Plane and Dual-Engine are historical descriptions. They must not appear as current architecture labels.
