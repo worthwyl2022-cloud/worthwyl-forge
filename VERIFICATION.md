@@ -31,6 +31,10 @@ The former Eight-Plane and Dual-Engine descriptions are historical framing only.
 | Production client/server build | `npm run build` | **PASS** |
 | Dependency install | `npm ci --ignore-scripts` | **PASS**, 293 packages audited, 0 vulnerabilities reported |
 | Local transition adapter | `POST /api/substrate/evaluate-state-transition` | **Design hardened** as non-authoritative assessment; it explicitly returns `authorityIssued: false` and identifies the Kernel as canonical authority |
+| Production server startup | `node dist/server.cjs` | **PASS**; server started successfully after Express 5 catch-all compatibility correction |
+| Health endpoint | `GET /api/health` | **PASS**; HTTP 200 |
+| Access status endpoint | `GET /api/access/status` | **PASS**; unconfigured mode explicitly reports disabled access rather than pretending a client-side gate is security |
+| Protected API behavior | configured access mode | **PASS** at middleware level; protected routes return HTTP 401 without an authenticated session |
 
 ## Security corrections in this revision
 

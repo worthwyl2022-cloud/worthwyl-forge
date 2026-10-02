@@ -28,7 +28,7 @@ import { cn } from '../lib/utils';
 export function CraniumOverview({
   onNavigateTab
 }: {
-  onNavigateTab?: (tab: 'overview' | 'kernel' | 'quarantine' | 'canon' | 'benchmark' | 'console') => void;
+  onNavigateTab?: (tab: 'overview' | 'creator' | 'kernel' | 'quarantine' | 'canon' | 'benchmark' | 'console') => void;
 }) {
   const [copiedMd, setCopiedMd] = useState(false);
   const [activeMoatTab, setActiveMoatTab] = useState<'contract' | 'quarantine' | 'immune' | 'constitution'>('contract');

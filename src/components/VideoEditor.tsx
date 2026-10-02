@@ -137,7 +137,7 @@ export function VideoEditor({ initialUrl, duration, onClose, onSave }: VideoEdit
             <X size={20} />
           </button>
           <div>
-            <h2 className="text-xl font-black tracking-tight text-white uppercase">Cinematic Forge Editor</h2>
+            <h2 className="text-xl font-black tracking-tight text-white uppercase">Cinematic Sequence Editor</h2>
             <p className="text-[10px] font-bold text-sleek-muted uppercase tracking-widest">Neural Sequence Refinement Layer</p>
           </div>
         </div>
@@ -465,13 +465,7 @@ export function VideoEditor({ initialUrl, duration, onClose, onSave }: VideoEdit
                     </div>
                   ))}
                   
-                  <button 
-                    disabled 
-                    className="w-full py-3 rounded-xl border border-white/5 bg-black/10 text-[8px] font-black uppercase tracking-widest text-sleek-muted opacity-50 flex items-center justify-center gap-2"
-                  >
-                    <Plus size={12} />
-                    Link Adjacent Neural Node
-                  </button>
+
                 </div>
               </div>
             )}

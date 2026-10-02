@@ -141,8 +141,8 @@ const CRANIUM_TOUR_STATIONS: TourStation[] = [
 interface InteractiveAppTourProps {
   isOpen: boolean;
   onClose: () => void;
-  activeView: 'overview' | 'kernel' | 'quarantine' | 'canon' | 'benchmark' | 'console';
-  onNavigateView: (view: 'overview' | 'kernel' | 'quarantine' | 'canon' | 'benchmark' | 'console') => void;
+  activeView: 'overview' | 'creator' | 'kernel' | 'quarantine' | 'canon' | 'benchmark' | 'console';
+  onNavigateView: (view: 'overview' | 'creator' | 'kernel' | 'quarantine' | 'canon' | 'benchmark' | 'console') => void;
 }
 
 export function InteractiveAppTour({
