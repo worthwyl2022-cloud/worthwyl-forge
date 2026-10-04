@@ -12,14 +12,14 @@ Studio sits above the governed Convertible Cranium substrate. It can orchestrate
 
 ### Current Convertible Cranium architecture
 
-**Dual-Substrate / Quad-Engine**
+**Dual-Substrate / Quad-Engine authority path**
 
-1. Cranium AI — intelligence and orchestration.
-2. Synapse — evidence and assessment.
-3. Governance Review Juror One — constructive review.
-4. Governance Review Juror Two — adversarial review.
+1. **Engine 1: Synapse** — proposal formation, bounded assessment, evidence capture, provenance, and D_A / D_B context derivation.
+2. **Engine 2A: Substrate A / Jury A1 + A2** — constitutional and policy authority assessment: **May We?**
+3. **Engine 2B: Substrate B / Jury B1 + B2** — evidence-grounding assessment: **Is It So?**
+4. **Engine 3: Cranium Kernel** — canonical convergence, lineage verification, durable authority state, replay protection, denial/quarantine semantics, and receipts.
 
-The jurors deliberately use different review mandates and processes. Neither is authoritative.
+The jurors are independent bounded evaluators. Neither issues canonical authority.
 
 ### Canonical authority
 
@@ -29,7 +29,7 @@ No Studio state, Forge workflow, model output, Synapse result, juror result, mem
 
 ## Runtime flow
 
-Listener → Studio/Commander operational context → AI proposal → Synapse assessment → Juror One / Juror Two review → governed request → Kernel decision → execution → receipt → Miracle Memory
+Listener → Commander/Studio operational context → Cranium AI proposal → Engine 1 Synapse → Engine 2A Substrate A / Jury A1+A2 → Engine 2B Substrate B / Jury B1+B2 → Engine 3 Cranium Kernel convergence → governed execution → receipt/lineage → Miracle Memory
 
 Circuit Breaker / COMA can interrupt, quarantine, or roll back runtime execution without becoming an authority source.
 

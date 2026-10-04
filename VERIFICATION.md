@@ -8,13 +8,12 @@ This record covers the Studio web surface and its local governance-boundary adap
 
 ## Current architecture
 
-The Studio is aligned to the current Dual-Substrate / Quad-Engine architecture:
+The Studio is aligned to the current Dual-Substrate / Quad-Engine authority architecture:
 
-- Cranium AI: intelligence and orchestration.
-- Synapse: evidence and assessment.
-- Governance Review Juror One: constructive review.
-- Governance Review Juror Two: adversarial review.
-- Kernel: sole canonical authority.
+- Engine 1, Synapse: proposal, evidence, provenance, and D_A / D_B context derivation.
+- Engine 2A, Substrate A / Jury A1 + A2: constitutional and policy authority assessment.
+- Engine 2B, Substrate B / Jury B1 + B2: evidence-grounding assessment.
+- Engine 3, Cranium Kernel: sole canonical convergence authority.
 - Listener: untrusted ingress.
 - Commander OS: operational control surface.
 - Miracle Memory: governed continuity.
