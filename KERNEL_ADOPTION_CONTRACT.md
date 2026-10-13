@@ -1,5 +1,13 @@
 # Kernel Adoption Contract
 
+**Contract ID:** `cranium-kernel-adoption-v1`
+
+**Authority source:** [cranium-kernel](https://github.com/worthwyl2022-cloud/cranium-kernel)
+
+> **Cognition may come from anywhere. Authority comes only through Cranium.**
+
+Only `cranium-kernel` may evaluate, reduce, replay-protect, journal, persist canonical state, issue canonical receipts, or grant authority.
+
 WorthWyl Studio is subordinate to the Convertible Cranium Kernel.
 
 Only the Kernel may evaluate and issue canonical authority, enforce canonical replay protection, journal canonical state, persist canonical state, issue canonical receipts, or grant authority.
