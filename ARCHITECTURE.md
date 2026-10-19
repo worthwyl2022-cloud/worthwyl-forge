@@ -15,11 +15,11 @@ Studio sits above the governed Convertible Cranium substrate. It can orchestrate
 **Dual-Substrate / Quad-Engine authority path**
 
 1. **Engine 1: Synapse** — proposal formation, bounded assessment, evidence capture, provenance, and D_A / D_B context derivation.
-2. **Engine 2A: Substrate A / Jury A1 + A2** — constitutional and policy authority assessment: **May We?**
-3. **Engine 2B: Substrate B / Jury B1 + B2** — evidence-grounding assessment: **Is It So?**
-4. **Engine 3: Cranium Kernel** — canonical convergence, lineage verification, durable authority state, replay protection, denial/quarantine semantics, and receipts.
+2. **Engine 2A: Convertible Cranium Guardian Substrate** — Constitutional Integrity and permission assessment.
+3. **Engine 2B: Convertible Cranium Imperial Substrate** — Evidence Integrity and grounding assessment.
+4. **Engine 3: Cranium Kernel** — the sole canonical authority boundary for lineage verification, durable authority state, replay protection, denial/quarantine semantics, and receipts.
 
-The jurors are independent bounded evaluators. Neither issues canonical authority.
+Guardian and Imperial are independent bounded substrates. Neither issues canonical authority; only Cranium Kernel establishes canonical authority.
 
 ### Canonical authority
 
@@ -29,7 +29,7 @@ No Studio state, Forge workflow, model output, Synapse result, juror result, mem
 
 ## Runtime flow
 
-Listener → Commander/Studio operational context → Cranium AI proposal → Engine 1 Synapse → Engine 2A Substrate A / Jury A1+A2 → Engine 2B Substrate B / Jury B1+B2 → Engine 3 Cranium Kernel convergence → governed execution → receipt/lineage → Miracle Memory
+Listener → Commander/Studio operational context → Cranium AI proposal → Engine 1 Synapse → Engine 2A Guardian Substrate (Constitutional Integrity) → Engine 2B Imperial Substrate (Evidence Integrity) → Engine 3 Cranium Kernel (sole authority boundary) → governed execution → receipt/lineage → Miracle Memory
 
 Circuit Breaker / COMA can interrupt, quarantine, or roll back runtime execution without becoming an authority source.
 

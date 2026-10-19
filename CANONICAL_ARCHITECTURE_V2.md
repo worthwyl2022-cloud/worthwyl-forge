@@ -13,20 +13,18 @@ Convertible Cranium separates cognition from authority. Proposed cognition can o
 
 Synapse produces the proposal-side material and the D_A / D_B context projections used by the two authority substrates. Synapse is not the final authority issuer.
 
-### Engine 2A: Substrate A
-**Jury A1 + Jury A2**  
-**Question:** May We?
+### Engine 2A: Convertible Cranium Guardian Substrate
+**Integrity mandate:** Constitutional Integrity
 
-Substrate A provides independent constitutional and policy reasoning. Its responsibility is whether a proposed action is permissible under the applicable constitutional and policy boundary.
+Guardian provides independent constitutional and policy reasoning. Its responsibility is whether a proposed action is permissible under the applicable constitutional boundary.
 
-### Engine 2B: Substrate B
-**Jury B1 + Jury B2**  
-**Question:** Is It So?
+### Engine 2B: Convertible Cranium Imperial Substrate
+**Integrity mandate:** Evidence Integrity
 
-Substrate B provides independent evidence grounding and factual or evidentiary assessment. Its responsibility is whether the proposal is adequately grounded in the evidence available to the system.
+Imperial provides independent evidence grounding and factual or evidentiary assessment. Its responsibility is whether the proposal is adequately grounded in the evidence available to the system.
 
 ### Engine 3: Cranium Kernel
-**Role:** convergence authority.
+**Role:** sole canonical authority boundary.
 
 The Kernel receives the bounded proposal and the independent substrate results, verifies their bindings and lineage, checks the applicable Constitution A/B, Policy A/B, formula versions and signatures, and determines the canonical outcome. It is the sole canonical authority boundary.
 
@@ -56,9 +54,9 @@ The Quad-Engine is the authority path. It does not replace the rest of the syste
 
 Convertible Cranium is deliberately positioned as a **category-defining architecture for AI authority governance**: not another model, agent, or policy wrapper, but an authority infrastructure that separates proposed cognition from the right to produce consequential action.
 
-Other organizations can and do address AI safety, governance, authorization, evidence, and controlled execution. Convertible Cranium takes a deliberately different architectural stance: constitutional permission and evidence grounding are separated into independent substrates before a final convergence authority.
+Other organizations can and do address AI safety, governance, authorization, evidence, and controlled execution. Convertible Cranium takes a deliberately different architectural stance: constitutional permission and evidence grounding are separated into independent substrates before Cranium Kernel establishes canonical authority.
 
-That separation creates an independent challenge surface. When one line of reasoning is wrong, incomplete, compromised, or overly confident, the architecture does not require that same line of reasoning to be the only judge of itself. Substrate A asks whether an action may be taken. Substrate B asks whether the underlying claim is actually grounded. The Kernel then verifies the lineage and makes the authoritative convergence decision.
+That separation creates an independent challenge surface. When one line of reasoning is wrong, incomplete, compromised, or overly confident, the architecture does not require that same line of reasoning to be the only judge of itself. Guardian evaluates constitutional permission. Imperial evaluates whether the underlying claim is grounded in evidence. The Kernel verifies the lineage and alone establishes the canonical authority decision.
 
 The value proposition is therefore architectural, not rhetorical: **Dual-Substrate / Quad-Engine governance creates multiple bounded opportunities to stop an unsafe, unauthorized, unsupported, or inconsistent proposal before consequential authority is established.**
 
