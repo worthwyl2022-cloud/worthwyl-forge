@@ -7,9 +7,9 @@ The Convertible Cranium Kernel is the sole canonical semantic and authority sour
 ## Current authority path
 
 1. Engine 1: Synapse proposal and context derivation.
-2. Engine 2A: Substrate A / Jury A1 + A2, constitutional authority assessment.
-3. Engine 2B: Substrate B / Jury B1 + B2, evidence grounding assessment.
-4. Engine 3: Cranium Kernel convergence authority.
+2. Engine 2A: Convertible Cranium Guardian Substrate, Constitutional Integrity assessment.
+3. Engine 2B: Convertible Cranium Imperial Substrate, Evidence Integrity assessment.
+4. Engine 3: Cranium Kernel, the sole canonical authority boundary.
 
 Commander OS, Cranium AI, Cranium Listener, Miracle Memory, Circuit Breaker / COMA, receipts and attestation, Human Authority, and WorthWyl Studio are supporting layers around that path. None becomes a second authority source.
 
