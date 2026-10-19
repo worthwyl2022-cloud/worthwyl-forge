@@ -12,7 +12,7 @@ require_file "$contract"
 require_file "$alignment"
 require_text "$contract" '# Kernel Adoption Contract'
 require_text "$contract" '**Contract ID:** `cranium-kernel-adoption-v1`'
-require_text "$contract" '**Authority source:** [cranium-kernel](https://github.com/worthwyl2022-cloud/cranium-kernel)'
+require_text "$contract" '**Authority source:** [cranium-kernel](https://github.com/worthwylfoundation-hue/cranium-kernel)'
 require_text "$contract" '> **Cognition may come from anywhere. Authority comes only through Cranium.**'
 require_text "$contract" 'Only `cranium-kernel` may evaluate, reduce, replay-protect, journal, persist canonical state, issue canonical receipts, or grant authority.'
 require_text "$alignment" 'cranium-kernel'
