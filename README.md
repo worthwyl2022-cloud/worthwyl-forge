@@ -68,3 +68,6 @@ The former **Eight-Plane** and **Dual-Engine** descriptions are historical frami
 
 **WorthWyl Studio is where the human operates the work. Convertible Cranium is where authority is governed.**
 
+
+
+See also: [ECOSYSTEM.md](./ECOSYSTEM.md) · [LICENSE](./LICENSE)
