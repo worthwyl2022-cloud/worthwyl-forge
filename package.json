@@ -32,7 +32,7 @@
     "autoprefixer": "^10.6.1",
     "esbuild": "^0.28.2",
     "nanoid": "^6.0.2",
-    "postcss": "^8.5.28",
+    "postcss": "^8.5.31",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.23.15",
     "typescript": "~5.8.2",
